@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    "@babel/plugin-proposal-function-bind"
+  ],
+  "presets": [
+    ["@babel/preset-flow"],
+    ["@babel/preset-env",
+    {
+      "targets": {
+        "node": 10
+      }
+    }]
+  ]
+}
