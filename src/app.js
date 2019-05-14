@@ -46,12 +46,17 @@ const calculateScore = (_dice) => {
     const die = dice[i]
     const next1 = dice[i + 1]
     const next2 = dice[i + 2]
-    // const next3 = dice[i + 3]
-    // const all4 = [die, next1, next2, next3]
+    const next3 = dice[i + 3]
+    const all4 = [die, next1, next2, next3]
     // if(all4.every(d => d === die)) {
     //   currentScore += scoresForSet[die - 1] * 2
     //   i += 3
     // }
+    if(howMany(die, [die, next1, next2, next3]) === 4) {
+      currentScore += scoresForSet[die - 1] * 2
+      i += 3
+      continue
+    }
     if(howMany(die, [die, next1, next2]) === 3) {
       currentScore += scoresForSet[die - 1]
       i += 2
@@ -78,14 +83,14 @@ const calculateScore = (_dice) => {
 //
 
 const samples = [
-  [[1,1,1,5,1], 1150],
+  [[1,1,1,5,1], 2050],
   [[2,3,4,6,2], 0],
   [[3,4,5,3,3], 350],
   [[1,5,1,2,4], 250],
-  [[5,5,5,5,5], 600],
-  [[1,1,1,5,1,1], 1250],
+  [[5,5,5,5,5], 1050],
+  [[1,1,1,5,1,1], 2150],
   [[2,3,4,6,2,3], 0],
-  [[5,5,5,5,5,5], 1000],
+  [[5,5,5,5,5,5], 1100],
 ]
 
 samples.forEach(([dice, expectedScore]) => {
