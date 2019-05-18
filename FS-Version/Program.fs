@@ -39,20 +39,24 @@ let calculateMixedGroupsAndSets (diceGroups:(int*int list) list):int =
     diceGroups
     |> List.sumBy(snd>>scoreAGroup)
 
-let calculateScore (diceThrown:int list):int =
+let calculateScore (diceThrown:int list, expectedScore: int):int * int =
     let sortedDice = List.sort diceThrown
     let diceGroups = sortedDice |> List.groupBy id
 
-    if List.length diceGroups = 3 && diceGroups |> List.map snd |> List.forall (fun (x) -> List.length x = 2) then
-        800
-    else if List.length diceGroups = 6 && diceGroups |> List.map snd |> List.forall (fun (x) -> List.length x = 1) then
-        1200
-    else
-        calculateMixedGroupsAndSets diceGroups
+    let calculatedScore =
+        if List.length diceGroups = 3 && diceGroups |> List.map snd |> List.forall (fun (x) -> List.length x = 2) then
+            800
+        else if List.length diceGroups = 6 && diceGroups |> List.map snd |> List.forall (fun (x) -> List.length x = 1) then
+            1200
+        else
+            calculateMixedGroupsAndSets diceGroups
+    assert (expectedScore = calculatedScore)
+    (calculatedScore, expectedScore)
+        
 
 [<EntryPoint>]
-let main argv =
+let main _argv =
     samples 
-    |> List.map (fst>>calculateScore)
-    |> List.iter (printfn "Score: %A")
+    |> List.map calculateScore
+    |> List.iter (fun (score, calculatedScore) -> printfn "Score: %A Expected: %A" score calculatedScore)
     0
