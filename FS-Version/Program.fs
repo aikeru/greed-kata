@@ -58,5 +58,5 @@ let calculateScore (diceThrown:int list, expectedScore: int):int * int =
 let main _argv =
     samples 
     |> List.map calculateScore
-    |> List.iter (fun (score, calculatedScore) -> printfn "Score: %A Expected: %A" score calculatedScore)
+    |> List.iter (fun (score, expectedScore) -> printfn "Score: %A Expected: %A" score expectedScore)
     0
